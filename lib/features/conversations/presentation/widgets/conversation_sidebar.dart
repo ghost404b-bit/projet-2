@@ -24,11 +24,12 @@ class ConversationSidebar extends StatelessWidget {
   Widget build(BuildContext context) {
     final chat = context.watch<ChatProvider>();
     final location = GoRouterState.of(context).uri.path;
+    final colors = AppColors.of(context);
 
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.sidebar,
-        border: Border(right: BorderSide(color: AppColors.glassBorder)),
+      decoration: BoxDecoration(
+        color: colors.sidebar,
+        border: Border(right: BorderSide(color: colors.glassBorder)),
       ),
       child: SafeArea(
         child: Column(
@@ -83,7 +84,7 @@ class ConversationSidebar extends StatelessWidget {
                 child: Text(
                   'HISTORY',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                        color: AppColors.textMuted,
+                        color: colors.textMuted,
                         letterSpacing: 1.5,
                         fontWeight: FontWeight.w600,
                       ),
@@ -96,7 +97,7 @@ class ConversationSidebar extends StatelessWidget {
                         child: Text(
                           'No conversations yet',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: AppColors.textMuted,
+                                color: colors.textMuted,
                               ),
                         ),
                       )
@@ -232,7 +233,7 @@ class _ConversationTile extends StatelessWidget {
             Icon(
               Icons.chat_bubble_outline_rounded,
               size: 18,
-              color: item.isActive ? AppColors.accent : AppColors.textMuted,
+              color: item.isActive ? AppColors.accent : AppColors.of(context).textMuted,
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -242,8 +243,8 @@ class _ConversationTile extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: item.isActive
-                          ? AppColors.textPrimary
-                          : AppColors.textSecondary,
+                          ? AppColors.of(context).textPrimary
+                          : AppColors.of(context).textSecondary,
                       fontWeight:
                           item.isActive ? FontWeight.w600 : FontWeight.normal,
                     ),
@@ -251,7 +252,7 @@ class _ConversationTile extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.delete_outline, size: 18),
-              color: AppColors.textMuted,
+              color: AppColors.of(context).textMuted,
               onPressed: onDelete,
               tooltip: 'Delete',
               visualDensity: VisualDensity.compact,
@@ -323,7 +324,7 @@ class _NavItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4),
       child: Material(
-        color: selected ? AppColors.glassFill : Colors.transparent,
+        color: selected ? AppColors.of(context).glassFill : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           onTap: onTap,
@@ -338,7 +339,7 @@ class _NavItem extends StatelessWidget {
                 Icon(
                   icon,
                   size: 22,
-                  color: selected ? AppColors.accent : AppColors.textSecondary,
+                  color: selected ? AppColors.accent : AppColors.of(context).textSecondary,
                 ),
                 if (expanded) ...[
                   const SizedBox(width: 12),
@@ -346,8 +347,8 @@ class _NavItem extends StatelessWidget {
                     label,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: selected
-                              ? AppColors.textPrimary
-                              : AppColors.textSecondary,
+                              ? AppColors.of(context).textPrimary
+                              : AppColors.of(context).textSecondary,
                           fontWeight:
                               selected ? FontWeight.w600 : FontWeight.normal,
                         ),
