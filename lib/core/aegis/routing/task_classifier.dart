@@ -49,7 +49,7 @@ class TaskClassifier {
 
   static bool _matchesWord(String text, String word) {
     final escaped = RegExp.escape(word.trim());
-    return RegExp('\\b$escaped\\b', caseSensitive: false).hasMatch(text);
+    return RegExp('(?<![\\p{L}\\p{N}])$escaped(?![\\p{L}\\p{N}])', caseSensitive: false, unicode: true).hasMatch(text);
   }
 
   double _scoreCode(String text) {
@@ -57,6 +57,7 @@ class TaskClassifier {
       'code', 'function', 'class', 'api', 'bug', 'debug', 'flutter',
       'dart', 'python', 'javascript', 'typescript', 'sql', 'refactor',
       'compile', 'syntax', 'github', 'repository', 'npm', 'docker',
+      'corrige', 'programme', 'node', 'script', 'développe',
     ];
     return _keywordScore(text, keys, base: 0.15, perHit: 0.2);
   }
@@ -66,6 +67,7 @@ class TaskClassifier {
     const keys = [
       'image', 'picture', 'photo', 'illustration', 'draw', 'render',
       'logo', 'icon', 'banner', 'thumbnail', 'png', 'jpeg',
+      'dessine', 'dessin',
     ];
     return _keywordScore(text, keys, base: 0.1, perHit: 0.4);
   }
@@ -75,6 +77,7 @@ class TaskClassifier {
     const keys = [
       'video', 'clip', 'animation', 'motion', 'film', 'footage',
       'storyboard', 'mp4', 'edit video', 'render video',
+      'vidéo',
     ];
     return _keywordScore(text, keys, base: 0.1, perHit: 0.4);
   }
@@ -84,6 +87,7 @@ class TaskClassifier {
       'research', 'study', 'analyze', 'analysis', 'compare', 'report',
       'survey', 'literature', 'paper', 'sources', 'citations',
       'market', 'competitor', 'benchmark', 'whitepaper', 'investigate',
+      'recherche', 'étude', 'analyse', 'concurrence', 'concurrent', 'marché', 'enquête',
     ];
     return _keywordScore(text, keys, base: 0.12, perHit: 0.2);
   }

@@ -7,7 +7,7 @@ const TEXT_MARGIN = 0.10;
 
 function matchesWord(text, word) {
   const escaped = word.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(`\\b${escaped}\\b`, 'i').test(text);
+  return new RegExp(`(?<![\\p{L}\\p{N}])${escaped}(?![\\p{L}\\p{N}])`, 'iu').test(text);
 }
 
 function scoreKeywords(text, keys, base, perHit) {
@@ -29,20 +29,24 @@ export class TaskClassifier {
       [TaskType.CODE]: scoreKeywords(combined, [
         'code', 'function', 'api', 'bug', 'debug', 'flutter', 'dart',
         'python', 'javascript', 'typescript', 'sql', 'refactor', 'syntax',
+        'corrige', 'programme', 'node', 'script', 'développe',
       ], 0.15, 0.2),
       [TaskType.IMAGE]: IMAGE_EXT.some((ext) => attachment.endsWith(ext))
         ? 0.95
         : scoreKeywords(combined, [
             'image', 'picture', 'photo', 'illustration', 'draw', 'logo', 'icon',
+            'dessine', 'dessin',
           ], 0.1, 0.4),
       [TaskType.VIDEO]: VIDEO_EXT.some((ext) => attachment.endsWith(ext))
         ? 0.95
         : scoreKeywords(combined, [
             'video', 'clip', 'animation', 'motion', 'film', 'footage', 'mp4',
+            'vidéo',
           ], 0.1, 0.4),
       [TaskType.RESEARCH]: scoreKeywords(combined, [
         'research', 'study', 'analyze', 'report', 'survey', 'paper', 'sources',
         'market', 'competitor', 'benchmark', 'investigate',
+        'recherche', 'étude', 'analyse', 'concurrence', 'concurrent', 'marché', 'enquête',
       ], 0.12, 0.2),
     };
 
